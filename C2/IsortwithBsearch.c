@@ -1,8 +1,7 @@
-#define NDEBUG
-#include <assert.h>
 #include <stdio.h>
 
 void InsertionSortbyAscending(int*);
+int BSearch(int*, int, int, int);
 
 int main()
 {
@@ -19,16 +18,42 @@ int main()
 
 void InsertionSortbyAscending(int* arr)
 {
-    int i, j, key;
+    int i, j, k, key;
 
     for (j = 2; j < 7; ++j)
     {
-        assert(j == 1);
         key = arr[j];
-        for (i = j - 1; i > 0 && arr[i] > key; arr[i + 1] = arr[i], --i)
-        {
-            printf("arr[%d] is %d\n", i, arr[i]);
-        }
-        arr[i + 1] = key;
+
+        i = j - 1;
+        k = BSearch(arr, key, 1, i);
+        //printf("k is %d\n", k);
+        for (; i >= k; arr[i + 1] = arr[i], i--)
+            ;
+        arr[k] = key;
     }
+}
+
+//return the location in which the number is the smallest number bigger than x
+int BSearch(int* arr, int x, int begin, int end)
+{
+    int mid = (begin + end) / 2;
+
+    while (begin < end)
+    {
+        if (arr[mid] == x)
+            return mid;
+        else if (arr[mid] < x)
+            begin = mid + 1;
+        else
+            end = mid - 1;
+        mid = (begin + end) / 2;
+    }
+    //special point
+    //if x is the biggest number in the sorted part
+    //the location should be the end(or begin) + 1
+    if (x > arr[begin])
+        return begin + 1;
+    else
+        return begin;
+
 }
