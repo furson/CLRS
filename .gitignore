@@ -4,6 +4,8 @@
 # add catalogs in the file
 !/C2/
 !/C2/**/
+!/C4/
+!/C4/**/
 
 
 # add .c, .h, .txt, .md and Makefile
